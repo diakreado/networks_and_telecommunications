@@ -1,13 +1,13 @@
-#ifndef TCPIP_MODEL_H
-#define TCPIP_MODEL_H
+#ifndef TCPIP_SIMPLENUMBERS_H
+#define TCPIP_SIMPLENUMBERS_H
 
 #include <vector>
 #include <sstream>
+#include <queue>
 #include "FileStorage.h"
 #include "RangeStructure.h"
 #include "../Config.h"
-
-//todo Хранение рассчитанных клиентами простых чисел
+#include "ResultOfTask.h"
 
 class SimpleNumbers {
 
@@ -30,6 +30,8 @@ private:
 
     long maxSimpleNum;
     int nextHop;
+
+    std::vector<ResultOfTask>* vrt;
 
     const FileStorage* fs;
 };

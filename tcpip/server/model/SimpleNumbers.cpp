@@ -4,12 +4,14 @@ SimpleNumbers* SimpleNumbers::instance;
 
 SimpleNumbers::SimpleNumbers() {
     fs = new FileStorage(Config::FILE_PATH);
+    vrt = new std::vector<ResultOfTask>();
     maxSimpleNum = 0;
     nextHop = 0;
 }
 
 SimpleNumbers::~SimpleNumbers() {
     delete fs;
+    delete vrt;
     delete instance;
 }
 
@@ -22,6 +24,11 @@ SimpleNumbers* SimpleNumbers::getInstance() {
 
 void SimpleNumbers::saveNumber(const int id, const long simpleNumber) {
     auto newRecord = std::to_string(simpleNumber) + "|";
+
+//    auto buffer = std::vector<long>();
+//    auto rs = new ResultOfTask(id, false, buffer);
+//    vrt->push_back(*rs);
+
     if (simpleNumber > maxSimpleNum) {
         maxSimpleNum = simpleNumber;
     }

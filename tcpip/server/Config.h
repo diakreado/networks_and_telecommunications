@@ -1,5 +1,5 @@
-#ifndef SERVER_CONST_H
-#define SERVER_CONST_H
+#ifndef SERVER_CONFIG_H
+#define SERVER_CONFIG_H
 
 class Config {
 
@@ -11,4 +11,4 @@ public:
     static const char *FILE_PATH;
 };
 
-#endif //SERVER_CONST_H
+#endif //SERVER_CONFIG_H

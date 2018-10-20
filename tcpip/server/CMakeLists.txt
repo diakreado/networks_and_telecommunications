@@ -4,6 +4,9 @@ project(server)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(server
-        main.cpp ConsoleHandler.cpp ConsoleHandler.h Config.h Server.cpp Server.h model/FileStorage.cpp model/FileStorage.h Config.cpp model/SimpleNumbers.cpp model/SimpleNumbers.h model/RangeStructure.h model/ResultsOfTask.cpp model/ResultsOfTask.h)
+        main.cpp ConsoleHandler.cpp ConsoleHandler.h
+        Config.h Server.cpp Server.h model/FileStorage.cpp
+        model/FileStorage.h Config.cpp model/SimpleNumbers.cpp
+        model/SimpleNumbers.h model/RangeStructure.h model/ResultOfTask.h)
 
 target_link_libraries( server pthread )
