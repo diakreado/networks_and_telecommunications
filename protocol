@@ -10,7 +10,7 @@ request:
 	[LAST]?[number]
 
 
-	FROM [number1,number2] -- Выдача диапазона расчета чисел
+	FROM [number1,number2] -- Выдача диапазона для расчета чисел
 
 	[FROM]?[number1]/[number2]
 

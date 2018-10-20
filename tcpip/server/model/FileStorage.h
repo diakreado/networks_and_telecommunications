@@ -10,8 +10,8 @@ public:
     explicit FileStorage(std::string fileName);
     ~FileStorage();
 
-    void write(std::string  inputData);
-    std::string read();
+    void write(std::string  inputData) const;
+    std::string read() const;
 
 private:
     const std::string* fileName;

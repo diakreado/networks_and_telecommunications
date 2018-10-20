@@ -9,8 +9,8 @@ FileStorage::~FileStorage() {
     delete this->fileName;
 }
 
-void FileStorage::write(const std::string inputData) {
-    std::ofstream out(*fileName);
+void FileStorage::write(const std::string inputData) const {
+    std::ofstream out(*fileName, std::ios::app);
     if (!out.is_open()) {
         std::cout << "Cannot open file." << std::endl;
         return;
@@ -19,7 +19,7 @@ void FileStorage::write(const std::string inputData) {
     out.close ();
 }
 
-std::string FileStorage::read() {
+std::string FileStorage::read() const {
     std::ifstream in(*fileName);
     std::string fileData;
     if (!in.is_open()) {

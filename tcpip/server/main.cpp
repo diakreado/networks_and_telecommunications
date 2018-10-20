@@ -1,17 +1,20 @@
 #include "Config.h"
 #include "Server.h"
 
-#include "FileStorage.h"
+#include "model/SimpleNumbers.h"
 
 int main()
 {
     auto server = new Server();
-    server->start();
+//    server->start();
 
-//    auto fs = new FileStorage(Config::FILE_PATH);
-//
-//    fs->write("polka1231");
-//    std::cout << fs->read() << std::endl;
+    auto model = SimpleNumbers::getInstance();
+
+    auto data = model->getLast(10);
+    for (long strNum : data) {
+        std::cout << strNum;
+    }
+    std::cout << std::endl;
 
     return 0;
 }

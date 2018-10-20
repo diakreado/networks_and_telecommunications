@@ -7,6 +7,7 @@ public:
     static const int NUMBER_OF_READ_SYMBOLS = 5;
     static const int NUMBER_OF_CLIENTS = 5;
     static const int PORT = 7500;
+    static const int HOP = 100000;
     static const char *FILE_PATH;
 };
 
