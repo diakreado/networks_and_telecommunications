@@ -16,7 +16,7 @@
 class Server {
 
 public:
-    Server();
+    explicit Server();
     ~Server() = default;
 
     int start();
