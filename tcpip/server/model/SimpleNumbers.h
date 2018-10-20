@@ -4,10 +4,9 @@
 #include <vector>
 #include <sstream>
 #include <queue>
+#include <algorithm>
 #include "FileStorage.h"
-#include "RangeStructure.h"
 #include "../Config.h"
-#include "ResultOfTask.h"
 
 class SimpleNumbers {
 
@@ -16,10 +15,10 @@ public:
 
     static SimpleNumbers* getInstance();
 
-    void saveNumber(int id, long simpleNumber);
+    void saveNumber(long simpleNumber);
     long getMax() const;
     std::vector<long> getLast(int n);
-    RangeStructure getRange();
+    std::pair<long, long> getRange();
 
     static void split(std::string str, std::vector<std::string>& cont, char divider);
 
@@ -30,8 +29,6 @@ private:
 
     long maxSimpleNum;
     int nextHop;
-
-    std::vector<ResultOfTask>* vrt;
 
     const FileStorage* fs;
 };

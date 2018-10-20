@@ -4,14 +4,12 @@ SimpleNumbers* SimpleNumbers::instance;
 
 SimpleNumbers::SimpleNumbers() {
     fs = new FileStorage(Config::FILE_PATH);
-    vrt = new std::vector<ResultOfTask>();
     maxSimpleNum = 0;
     nextHop = 0;
 }
 
 SimpleNumbers::~SimpleNumbers() {
     delete fs;
-    delete vrt;
     delete instance;
 }
 
@@ -22,17 +20,33 @@ SimpleNumbers* SimpleNumbers::getInstance() {
     return instance;
 }
 
-void SimpleNumbers::saveNumber(const int id, const long simpleNumber) {
+void SimpleNumbers::saveNumber(const long simpleNumber) {
     auto newRecord = std::to_string(simpleNumber) + "|";
-
-//    auto buffer = std::vector<long>();
-//    auto rs = new ResultOfTask(id, false, buffer);
-//    vrt->push_back(*rs);
 
     if (simpleNumber > maxSimpleNum) {
         maxSimpleNum = simpleNumber;
     }
-    fs->write(newRecord);
+
+    auto fileData = fs->read();
+    std::vector<std::string> formattedData;
+    split(fileData, formattedData, '|');
+
+    std::vector<long> outputData;
+
+    for (std::string strNum : formattedData) {
+        outputData.push_back(std::stol(strNum));
+    }
+
+    outputData.push_back(simpleNumber);
+
+    std::sort(outputData.begin(), outputData.end());
+
+    std::stringstream ss;
+    for (long longNum : outputData) {
+        ss << longNum << "|";
+    }
+
+    fs->write(ss.str());
 }
 
 long SimpleNumbers::getMax() const {
@@ -67,12 +81,11 @@ void SimpleNumbers::split(const std::string str, std::vector<std::string> &cont,
     }
 }
 
-RangeStructure SimpleNumbers::getRange() {
+std::pair<long, long> SimpleNumbers::getRange() {
     std::pair<long, long> range(Config::HOP * nextHop, Config::HOP * (nextHop + 1));
-    RangeStructure rs(nextHop, range);
     nextHop++;
 
-    return rs;
+    return range;
 }
 
 

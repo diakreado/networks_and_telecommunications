@@ -10,7 +10,7 @@ FileStorage::~FileStorage() {
 }
 
 void FileStorage::write(const std::string inputData) const {
-    std::ofstream out(*fileName, std::ios::app);
+    std::ofstream out(*fileName);
     if (!out.is_open()) {
         std::cout << "Cannot open file." << std::endl;
         return;

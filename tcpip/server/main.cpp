@@ -6,15 +6,14 @@
 int main()
 {
     auto server = new Server();
-//    server->start();
+    server->start();
 
-    auto model = SimpleNumbers::getInstance();
-
-    auto data = model->getLast(10);
-    for (long strNum : data) {
-        std::cout << strNum;
-    }
-    std::cout << std::endl;
+//    auto model = SimpleNumbers::getInstance();
+//    auto data = model->getLast(100);
+//    for (long strNum : data) {
+//        std::cout << strNum;
+//    }
+//    std::cout << std::endl;
 
     return 0;
 }

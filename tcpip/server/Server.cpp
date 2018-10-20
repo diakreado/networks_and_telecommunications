@@ -3,7 +3,8 @@
 int Server::acceptSocket;
 std::mutex Server::mtx;
 std::vector<int> Server::arrayOfConnection;
-ConsoleHandler Server::ch;
+ConsoleHandler Server::consoleH;
+SimpleNumbers* Server::model = SimpleNumbers::getInstance();
 
 Server::Server() {
     struct sockaddr_in local {
@@ -23,7 +24,7 @@ Server::Server() {
 int Server::start() {
     std::thread acceptThr(acceptThread);
 
-    ch.startReading();
+    consoleH.startReading();
 
     shutdown(acceptSocket, SHUT_RDWR);
     close(acceptSocket);
@@ -36,7 +37,7 @@ int Server::start() {
 void Server::acceptThread() {
     int client_socket;
     while (true) {
-        if (ch.getCommand() == "exit" or ch.getCommand() == "e") {
+        if (consoleH.getCommand() == "exit" or consoleH.getCommand() == "e") {
             break;
         }
         if (arrayOfConnection.size() < Config::NUMBER_OF_CLIENTS) {
@@ -85,14 +86,8 @@ void Server::threadFunc(int* data) {
             break;
         }
         std::string res(result);
-        if (res.empty()) {
-            std::cout << "\n" << "result is null" << std::endl;
-            ch.newInputLine();
-        }
-        else {
-            std::cout << "\n" << s1 << " : " << std::endl;
-            ch.newInputLine();
-        }
+
+        requestH.handle(res);
     }
 
     mtx.lock();
