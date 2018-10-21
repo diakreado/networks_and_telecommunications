@@ -1,10 +1,13 @@
+
 #include "Server.h"
+
 
 int Server::acceptSocket;
 std::mutex Server::mtx;
 std::vector<int> Server::arrayOfConnection;
 ConsoleHandler Server::consoleH;
 SimpleNumbers* Server::model = SimpleNumbers::getInstance();
+
 
 Server::Server() {
     struct sockaddr_in local {
@@ -52,7 +55,6 @@ void Server::acceptThread() {
             mtx.unlock();
         }
     }
-
     for (int connection : arrayOfConnection) {
         shutdown(connection, SHUT_RDWR);
         close(connection);
@@ -85,11 +87,8 @@ void Server::threadFunc(int* data) {
         if (rc == -1) {
             break;
         }
-        std::string res(result);
-
-        requestH.handle(res);
+        requestH.handle(s1, result);
     }
-
     mtx.lock();
     arrayOfConnection.erase(std::remove(arrayOfConnection.begin(), arrayOfConnection.end(), s1), arrayOfConnection.end());
     mtx.unlock();
@@ -97,4 +96,9 @@ void Server::threadFunc(int* data) {
 
 std::vector<int> Server::getArrayOfConnection() {
     return arrayOfConnection;
+}
+
+void Server::write(const int clientSocket, std::string data) {
+    data.push_back(';');
+    send(clientSocket, data.c_str(), 1, 0);
 }

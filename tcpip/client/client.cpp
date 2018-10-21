@@ -1,3 +1,4 @@
+
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -7,7 +8,7 @@
 #include <pthread.h>
 #include <zconf.h>
 
-int nemain()
+int main2()
 {
     struct sockaddr_in peer;
     int s;
@@ -25,7 +26,7 @@ int nemain()
 
     rc = send(s, "11111111111", 1, 0);
 
-//    rc = recv(s, buf, 1, 0);
+    rc = recv(s, buf, 1, 0);
 
     if (rc <= 0)
         perror("recv call failed");

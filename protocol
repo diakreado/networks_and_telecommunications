@@ -1,5 +1,4 @@
 request:
-
 	MAX -- Выдача максимального рассчитанного простого числа
 
 	[MAX]?
@@ -15,16 +14,15 @@ request:
 	[FROM]?[number1]/[number2]
 
 	
-	POST [number] -- Загрузка на сервер нового расчитаного числа
+	POST [id][number] -- Загрузка на сервер расчитаного числа
 
-	[POST]?[number]
+	[POST]?[id]:[number]
 	
 
 	Длина пакета 4 + 1 + 10 + 1 + 10 = 26 символов
 
 
 response:
-
 	200 OK [data]
 
 	304 Not Modified

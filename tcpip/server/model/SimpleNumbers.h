@@ -7,6 +7,7 @@
 #include <algorithm>
 #include "FileStorage.h"
 #include "../Config.h"
+#include "../Utility.h"
 
 class SimpleNumbers {
 
@@ -19,8 +20,6 @@ public:
     long getMax() const;
     std::vector<long> getLast(int n);
     std::pair<long, long> getRange();
-
-    static void split(std::string str, std::vector<std::string>& cont, char divider);
 
 private:
     SimpleNumbers();

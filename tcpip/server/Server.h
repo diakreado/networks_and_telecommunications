@@ -24,6 +24,7 @@ public:
     int start();
 
     static std::vector<int> getArrayOfConnection();
+    static void write(const int clientSocket, std::string data);
 
 private:
     static int acceptSocket;

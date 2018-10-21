@@ -29,7 +29,7 @@ void SimpleNumbers::saveNumber(const long simpleNumber) {
 
     auto fileData = fs->read();
     std::vector<std::string> formattedData;
-    split(fileData, formattedData, '|');
+    Utility::split(fileData, formattedData, '|');
 
     std::vector<long> outputData;
 
@@ -56,7 +56,7 @@ long SimpleNumbers::getMax() const {
 std::vector<long> SimpleNumbers::getLast(int n) {
     auto fileData = fs->read();
     std::vector<std::string> formattedData;
-    split(fileData, formattedData, '|');
+    Utility::split(fileData, formattedData, '|');
 
     std::vector<long> outputData;
 
@@ -71,14 +71,6 @@ std::vector<long> SimpleNumbers::getLast(int n) {
         outputData.push_back(std::stol(formattedData[i]));
     }
     return outputData;
-}
-
-void SimpleNumbers::split(const std::string str, std::vector<std::string> &cont, const char divider) {
-    std::stringstream ss(str);
-    std::string token;
-    while (std::getline(ss, token, divider)) {
-        cont.push_back(token);
-    }
 }
 
 std::pair<long, long> SimpleNumbers::getRange() {

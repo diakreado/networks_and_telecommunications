@@ -2,12 +2,14 @@
 #define TCPIP_REQUESTHANDLER_H
 
 
+#include <iostream>
 #include <string>
+#include "Utility.h"
 
 class RequestHandler {
 
 public:
-    static void handle(std::string request);
+    static void handle(int socket, std::string request);
 };
 
 

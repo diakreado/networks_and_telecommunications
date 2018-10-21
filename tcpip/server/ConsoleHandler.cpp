@@ -22,7 +22,13 @@ void ConsoleHandler::startReading() {
             std::cout << "i - info" << std::endl;
             std::cout << "h - help" << std::endl;
             std::cout << "c - close" << std::endl;
+            std::cout << "clear" << std::endl;
             std::cout << "e - exit" << std::endl;
+        } 
+        else if (command == "clear") {
+            for (int i = 0; i < 10; ++i) {
+                std::cout << std::endl;
+            }
         }
         else if (command == "close" or command == "c") {
             if (connections.empty()) {
@@ -30,7 +36,7 @@ void ConsoleHandler::startReading() {
             } else {
                 std::cout << "Close connection." << std::endl;
                 for (int i = 0; i < connections.size(); i++) {
-                    std::cout << i + 1 << ". client socket: " << connections[i] << std::endl;
+                    std::cout << "    " << i + 1 << ". client socket: " << connections[i] << std::endl;
                 }
                 std::cout << "Enter number of close connection : ";
 
