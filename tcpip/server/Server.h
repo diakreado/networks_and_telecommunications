@@ -12,7 +12,6 @@
 #include <iostream>
 #include "../Config.h"
 #include "ConsoleHandler.h"
-#include "model/SimpleNumbers.h"
 #include "RequestHandler.h"
 
 class Server {
@@ -31,7 +30,6 @@ private:
 
     static ConsoleHandler consoleH;
     static RequestHandler requestH;
-    static SimpleNumbers* model;
     static std::mutex mtx;
     static std::vector<int> arrayOfConnection;
 

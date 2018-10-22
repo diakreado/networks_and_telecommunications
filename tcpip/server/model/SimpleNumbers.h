@@ -17,7 +17,7 @@ public:
     static SimpleNumbers* getInstance();
 
     void saveNumber(long simpleNumber);
-    long getMax() const;
+    long getMax();
     std::vector<long> getLast(int n);
     std::pair<long, long> getRange();
 

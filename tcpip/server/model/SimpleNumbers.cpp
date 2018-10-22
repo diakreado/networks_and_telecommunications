@@ -49,8 +49,8 @@ void SimpleNumbers::saveNumber(const long simpleNumber) {
     fs->write(ss.str());
 }
 
-long SimpleNumbers::getMax() const {
-    return maxSimpleNum;
+long SimpleNumbers::getMax() {
+    return getLast(1)[0];
 }
 
 std::vector<long> SimpleNumbers::getLast(int n) {

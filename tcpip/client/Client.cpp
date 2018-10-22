@@ -22,7 +22,6 @@ int Client::openConnection() {
 
 void Client::closeConnection() {
     //todo request to server for exit
-    
     shutdown(serverSocket, SHUT_RDWR);
     close(serverSocket);
     std::cout << "Connection was closed" << std::endl;
