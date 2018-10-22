@@ -10,13 +10,13 @@ void RequestHandler::handle(int socket, std::string request) {
     int i = 0;
     for (std::string part : partOfRequest) {
         i++;
-        std::cout << "part " << i << "  : " << part << ";  ";
+        std::cout << "part " << i << "  : " << part << " ";
     }
     std::cout << std::endl;
 
-    if (partOfRequest.size() > 0) {
-        Server::write(socket, "200");
+    if (partOfRequest.size() < 2) {
+        Server::write(socket, "400|");
     } else {
-        Server::write(socket, "400");
+        Server::write(socket, "200|");
     }
 }

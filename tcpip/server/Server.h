@@ -10,7 +10,7 @@
 #include <zconf.h>
 #include <algorithm>
 #include <iostream>
-#include "Config.h"
+#include "../Config.h"
 #include "ConsoleHandler.h"
 #include "model/SimpleNumbers.h"
 #include "RequestHandler.h"
@@ -37,7 +37,6 @@ private:
 
     static void acceptThread();
     static void threadFunc(int* data);
-    static int read_n(int n, int s1, char *result);
 };
 
 #endif //SERVER_SERVER_H

@@ -4,31 +4,36 @@
 
 Client::Client() {
     peer.sin_family = AF_INET;
-    peer.sin_port = htons(ClientConfig::PORT);
-    peer.sin_addr.s_addr = inet_addr(ClientConfig::INET_ADDR);
+    peer.sin_port = htons(Config::PORT);
+    peer.sin_addr.s_addr = inet_addr(Config::INET_ADDR);
 
-    clientSocket = socket(AF_INET, SOCK_STREAM, 0);
+    serverSocket = socket(AF_INET, SOCK_STREAM, 0);
 }
 
-void Client::openConnection() {
-    connect(clientSocket, (struct sockaddr *)&peer, sizeof(peer));
-    std::cout << "Client connect to " << ClientConfig::INET_ADDR << " " << ClientConfig::PORT << std::endl;
+int Client::openConnection() {
+    int c = connect(serverSocket, (struct sockaddr *)&peer, sizeof(peer));
+    if (c < 0) {
+        std::cout << "Fail to connect !!!" << std::endl;
+    } else {
+        std::cout << "Client connect to " << Config::INET_ADDR << " " << Config::PORT << std::endl;
+    }
+    return c;
 }
 
 void Client::closeConnection() {
     //todo request to server for exit
     
-    shutdown(clientSocket, SHUT_RDWR);              
-    close(clientSocket);
-    std::cout << "Connection is closed" << std::endl;
+    shutdown(serverSocket, SHUT_RDWR);
+    close(serverSocket);
+    std::cout << "Connection was closed" << std::endl;
 }
 
-
 void Client::write(std::string data) {
-    send(clientSocket, data.c_str(), 26, 0);
+    size_t sizeOfBuffer = (size_t) Config::NUMBER_OF_READ_SYMBOLS;
+    send(serverSocket, data.c_str(), sizeOfBuffer, 0);
 }
 
 std::string Client::read() {
-    return "polka";
+    return Utility::read_delimiter(serverSocket);
 }
 

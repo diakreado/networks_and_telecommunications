@@ -1,4 +1,4 @@
-#include "Config.h"
+#include "../Config.h"
 #include "Server.h"
 
 #include "model/SimpleNumbers.h"

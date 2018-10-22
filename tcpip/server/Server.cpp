@@ -61,29 +61,13 @@ void Server::acceptThread() {
     }
 }
 
-int Server::read_n(int n, int s1, char *result) {
-    char buf[1];
-    int number_of_entered = 0;
-    ssize_t rc = -1;
-
-    while (number_of_entered != n) {
-        rc = recv(s1, buf, 1, 0);
-        if (rc == -1) {
-            break;
-        }
-        result[number_of_entered] = buf[0];
-        number_of_entered += rc;
-    }
-    return (int)rc;
-}
-
 void Server::threadFunc(int* data) {
     int s1 = *data;
     char result[Config::NUMBER_OF_READ_SYMBOLS];
     int rc = -1;
 
     while (true) {
-        rc = read_n(Config::NUMBER_OF_READ_SYMBOLS, s1, result);
+        rc = Utility::read_n(s1, result);
         if (rc == -1) {
             break;
         }
@@ -99,6 +83,6 @@ std::vector<int> Server::getArrayOfConnection() {
 }
 
 void Server::write(const int clientSocket, std::string data) {
-    data.push_back(';');
-    send(clientSocket, data.c_str(), 1, 0);
+    data.push_back(Config::DELIMITER);
+    send(clientSocket, data.c_str(), data.size() + 1, 0);
 }

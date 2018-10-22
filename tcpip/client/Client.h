@@ -9,23 +9,22 @@
 #include <zconf.h>
 #include <string>
 #include <iostream>
-#include "ClientConfig.h"
+#include "../Config.h"
+#include "../Utility.h"
 
 
 class Client {
 
 public:
     Client();
-    void openConnection();
+    int openConnection();
     void closeConnection();
     void write(std::string data);
     std::string read();
 
 private:
-
-    int clientSocket;
+    int serverSocket;
     struct sockaddr_in peer;
-
 };
 
 

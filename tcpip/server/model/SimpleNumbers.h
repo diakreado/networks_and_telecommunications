@@ -6,8 +6,8 @@
 #include <queue>
 #include <algorithm>
 #include "FileStorage.h"
-#include "../Config.h"
-#include "../Utility.h"
+#include "../../Config.h"
+#include "../../Utility.h"
 
 class SimpleNumbers {
 

@@ -4,6 +4,7 @@ project(client)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(client
-        main.cpp client.cpp ClientConfig.cpp ClientConfig.h Client.cpp Client.h)
+        main.cpp Client.cpp Client.h
+        ../Utility.cpp ../Utility.h ../Config.h ../Config.cpp)
 
 target_link_libraries( client pthread )
