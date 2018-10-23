@@ -33,12 +33,12 @@ std::string Utility::read_delimiter(int s1) {
     std::string outData;
     ssize_t rc = -1;
 
-    while (buf[0] != Config::DELIMITER) {
+    while (true) {
         rc = recv(s1, buf, 1, 0);
         if (buf[0] == 0) {
             continue;
         }
-        if (rc == -1) {
+        if (rc == -1 || buf[0] == Config::DELIMITER) {
             break;
         }
         outData.push_back(buf[0]);

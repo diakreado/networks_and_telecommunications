@@ -21,6 +21,7 @@ public:
     void closeConnection();
     void write(std::string data);
     std::string read();
+    std::vector<long > countSimpleNumbers(std::pair<long,long> range);
 
 private:
     int serverSocket;

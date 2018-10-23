@@ -43,9 +43,8 @@ void ConsoleHandler::startReading() {
                 int client_number = -1;
                 std::cin >>  client_number;
 
-                shutdown(connections[client_number - 1], SHUT_RDWR);
-                close(connections[client_number - 1]);
-
+                Server::closeConnection(connections[client_number - 1]);
+                
                 std::cout << "Socket " << connections[client_number - 1] << " closed" << std::endl;
             }
         } else {

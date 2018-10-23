@@ -5,6 +5,7 @@
 #include <sstream>
 #include <queue>
 #include <algorithm>
+#include <mutex>
 #include "FileStorage.h"
 #include "../../Config.h"
 #include "../../Utility.h"
@@ -24,12 +25,10 @@ public:
 private:
     SimpleNumbers();
 
+    static std::mutex mtx;
     static SimpleNumbers* instance;
-
-    long maxSimpleNum;
-    int nextHop;
-
-    const FileStorage* fs;
+    const FileStorage* numberStorage;
+    const FileStorage* hopStorage;
 };
 
 

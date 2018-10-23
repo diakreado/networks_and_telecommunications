@@ -26,8 +26,8 @@ void RequestHandler::handle(int socket, std::string request) {
         }
         Server::write(socket, ss.str());
     } else if (command == "FROM") {
-
-        Server::write(socket, "200| ");
+        auto range = model->getRange();
+        Server::write(socket, "200| " + std::to_string(range.first) + "," + std::to_string(range.second));
     } else if (command == "POST") {
         model->saveNumber(std::stoi(partOfRequest[1]));
         Server::write(socket, "200| ");

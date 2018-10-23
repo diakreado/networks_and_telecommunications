@@ -6,6 +6,7 @@ int Server::acceptSocket;
 std::mutex Server::mtx;
 std::vector<int> Server::arrayOfConnection;
 ConsoleHandler Server::consoleH;
+RequestHandler Server::requestH;
 
 
 Server::Server() {
@@ -25,12 +26,10 @@ Server::Server() {
 
 int Server::start() {
     std::thread acceptThr(acceptThread);
-
     consoleH.startReading();
 
     shutdown(acceptSocket, SHUT_RDWR);
     close(acceptSocket);
-
     acceptThr.join();
 
     return 0;
@@ -70,7 +69,12 @@ void Server::threadFunc(int* data) {
         if (rc == -1) {
             break;
         }
-        requestH.handle(s1, result);
+        auto res = std::string(result);
+        if (res == "EXIT?") {
+            closeConnection(s1);
+            break;
+        }
+        RequestHandler::handle(s1, res);
     }
     mtx.lock();
     arrayOfConnection.erase(std::remove(arrayOfConnection.begin(), arrayOfConnection.end(), s1), arrayOfConnection.end());
@@ -84,4 +88,9 @@ std::vector<int> Server::getArrayOfConnection() {
 void Server::write(const int clientSocket, std::string data) {
     data.push_back(Config::DELIMITER);
     send(clientSocket, data.c_str(), data.size() + 1, 0);
+}
+
+void Server::closeConnection(int socket) {
+    shutdown(socket, SHUT_RDWR);
+    close(socket);
 }

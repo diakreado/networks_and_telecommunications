@@ -1,4 +1,5 @@
 
+#include <tgmath.h>
 #include "Client.h"
 
 
@@ -21,7 +22,7 @@ int Client::openConnection() {
 }
 
 void Client::closeConnection() {
-    //todo request to server for exit
+    write("EXIT?");
     shutdown(serverSocket, SHUT_RDWR);
     close(serverSocket);
     std::cout << "Connection was closed" << std::endl;
@@ -34,5 +35,27 @@ void Client::write(std::string data) {
 
 std::string Client::read() {
     return Utility::read_delimiter(serverSocket);
+}
+
+std::vector<long> Client::countSimpleNumbers(std::pair<long, long> range) {
+    std::vector<long> result;
+    if (range.first == 0) {
+        result.push_back(2);
+        range.first = 2;
+    }
+    bool isSimple;
+    for (long num = range.first+1; num < range.second; num+=2) {
+        isSimple = true;  //9 25 49
+        for (long j = 3; j <= sqrt(num); j+=2) {
+            if (num % j == 0) {
+                isSimple = false;
+                break;
+            }
+        }
+        if (isSimple) {
+            result.push_back(num);
+        }
+    }
+    return result;
 }
 

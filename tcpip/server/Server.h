@@ -25,11 +25,12 @@ public:
     static std::vector<int> getArrayOfConnection();
     static void write(const int clientSocket, std::string data);
 
+    static void closeConnection(int socket);
+
 private:
     static int acceptSocket;
 
     static ConsoleHandler consoleH;
-    static RequestHandler requestH;
     static std::mutex mtx;
     static std::vector<int> arrayOfConnection;
 

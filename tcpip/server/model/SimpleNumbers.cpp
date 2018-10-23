@@ -1,15 +1,16 @@
 #include "SimpleNumbers.h"
 
 SimpleNumbers* SimpleNumbers::instance;
+std::mutex SimpleNumbers::mtx;
 
 SimpleNumbers::SimpleNumbers() {
-    fs = new FileStorage(Config::FILE_PATH);
-    maxSimpleNum = 0;
-    nextHop = 0;
+    numberStorage = new FileStorage(std::string(Config::FILE_PATH) + "data");
+    hopStorage = new FileStorage(std::string(Config::FILE_PATH) + "hop");
 }
 
 SimpleNumbers::~SimpleNumbers() {
-    delete fs;
+    delete numberStorage;
+    delete hopStorage;
     delete instance;
 }
 
@@ -23,11 +24,10 @@ SimpleNumbers* SimpleNumbers::getInstance() {
 void SimpleNumbers::saveNumber(const long simpleNumber) {
     auto newRecord = std::to_string(simpleNumber) + "|";
 
-    if (simpleNumber > maxSimpleNum) {
-        maxSimpleNum = simpleNumber;
-    }
+    mtx.lock();
+    auto fileData = numberStorage->read();
+    mtx.unlock();
 
-    auto fileData = fs->read();
     std::vector<std::string> formattedData;
     Utility::split(fileData, formattedData, '|');
 
@@ -46,15 +46,25 @@ void SimpleNumbers::saveNumber(const long simpleNumber) {
         ss << longNum << "|";
     }
 
-    fs->write(ss.str());
+    mtx.lock();
+    numberStorage->write(ss.str());
+    mtx.unlock();
 }
 
 long SimpleNumbers::getMax() {
-    return getLast(1)[0];
+    auto simpNums = getLast(1);
+    if (!simpNums.empty()) {
+        return simpNums[0];
+    } else {
+        return 0;
+    }
 }
 
 std::vector<long> SimpleNumbers::getLast(int n) {
-    auto fileData = fs->read();
+    mtx.lock();
+    auto fileData = numberStorage->read();
+    mtx.unlock();
+
     std::vector<std::string> formattedData;
     Utility::split(fileData, formattedData, '|');
 
@@ -74,8 +84,12 @@ std::vector<long> SimpleNumbers::getLast(int n) {
 }
 
 std::pair<long, long> SimpleNumbers::getRange() {
+    mtx.lock();
+    auto nextHop = std::stoi(hopStorage->read());
     std::pair<long, long> range(Config::HOP * nextHop, Config::HOP * (nextHop + 1));
     nextHop++;
+    hopStorage->write(std::to_string(nextHop));
+    mtx.unlock();
 
     return range;
 }
