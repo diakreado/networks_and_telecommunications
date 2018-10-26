@@ -6,7 +6,6 @@ int Server::acceptSocket;
 std::mutex Server::mtx;
 std::vector<int> Server::arrayOfConnection;
 ConsoleHandler Server::consoleH;
-RequestHandler Server::requestH;
 
 
 Server::Server() {
