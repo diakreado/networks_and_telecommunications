@@ -1,41 +1,44 @@
 
-#include <tgmath.h>
-#include <unistd.h>
 #include "Client.h"
 
 
 Client::Client() {
     peer.sin_family = AF_INET;
     peer.sin_port = htons(Config::PORT);
-    peer.sin_addr.s_addr = inet_addr(Config::INET_ADDR);
+    peer.sin_addr.s_addr = INADDR_ANY;
 
-    serverSocket = socket(AF_INET, SOCK_STREAM, 0);
-}
-
-int Client::openConnection() {
-    int c = connect(serverSocket, (struct sockaddr *)&peer, sizeof(peer));
-    if (c < 0) {
-        std::cout << "Fail to connect !!!" << std::endl;
-    } else {
-        std::cout << "Client connect to " << Config::INET_ADDR << " " << Config::PORT << std::endl;
+    if ( (clientSocket = socket(AF_INET, SOCK_DGRAM, 0)) < 0 ) {
+        perror("socket creation failed");
+        exit(EXIT_FAILURE);
     }
-    return c;
 }
 
 void Client::closeConnection() {
     write("EXIT?");
-    shutdown(serverSocket, SHUT_RDWR);
-    close(serverSocket);
+    shutdown(clientSocket, SHUT_RDWR);
+    close(clientSocket);
     std::cout << "Connection was closed" << std::endl;
 }
 
 void Client::write(std::string data) {
     size_t sizeOfBuffer = (size_t) Config::NUMBER_OF_READ_SYMBOLS;
-    send(serverSocket, data.c_str(), sizeOfBuffer, 0);
+
+    sendto(clientSocket, data.c_str(), sizeOfBuffer,
+           0, (const struct sockaddr *) &peer, sizeof(peer));
 }
 
 std::string Client::read() {
-    return Utility::read_delimiter(serverSocket);
+    char buffer[Config::NUMBER_OF_READ_SYMBOLS];
+    ssize_t rc = -1;
+    socklen_t slen = sizeof(peer);
+
+    rc = recvfrom(clientSocket, (char *)buffer, Config::NUMBER_OF_READ_SYMBOLS,
+                 0, (struct sockaddr *) &peer, &slen);
+
+    std::vector<std::string> result;
+    Utility::split(buffer, result, ';');
+
+    return result[0].substr(0,rc);
 }
 
 std::vector<long> Client::countSimpleNumbers(std::pair<long, long> range) {

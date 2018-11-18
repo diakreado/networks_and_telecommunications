@@ -6,6 +6,7 @@
 #include <vector>
 #include <sstream>
 #include <sys/socket.h>
+#include <netinet/in.h>
 #include "Config.h"
 
 
@@ -13,8 +14,6 @@ class Utility {
 
 public:
     static void split(std::string str, std::vector<std::string>& cont, char divider);
-    static int read_n(int s1, char *result);
-    static std::string read_delimiter(int s1);
 };
 
 

@@ -4,7 +4,7 @@
 class Config {
 
 public:
-    static const int NUMBER_OF_READ_SYMBOLS = 10;
+    static const int NUMBER_OF_READ_SYMBOLS = 50;
     static const int PORT = 7500;
     static const int HOP = 10;
     static const char DELIMITER = ';';

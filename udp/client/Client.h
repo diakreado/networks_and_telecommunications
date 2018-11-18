@@ -6,9 +6,11 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-//#include <zconf.h>
 #include <string>
 #include <iostream>
+#include <tgmath.h>
+#include <unistd.h>
+#include <cstring>
 #include "../Config.h"
 #include "../Utility.h"
 
@@ -17,14 +19,13 @@ class Client {
 
 public:
     Client();
-    int openConnection();
     void closeConnection();
     void write(std::string data);
     std::string read();
     std::vector<long > countSimpleNumbers(std::pair<long,long> range);
 
 private:
-    int serverSocket;
+    int clientSocket;
     struct sockaddr_in peer;
 };
 

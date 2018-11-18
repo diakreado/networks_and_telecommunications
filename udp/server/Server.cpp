@@ -15,7 +15,7 @@ Server::Server() {
     si_me.sin_port = htons(Config::PORT);
     si_me.sin_addr.s_addr = htonl(INADDR_ANY);
 
-    server_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    server_socket = socket(AF_INET, SOCK_DGRAM, 0);
     if (server_socket < 0) {
         error_message("socket");
     }
@@ -101,6 +101,6 @@ void Server::closeConnection(int socket) {
 
 void Server::error_message(char* s) {
     perror(s);
-    exit(1);
+    exit(EXIT_FAILURE);
 }
 
