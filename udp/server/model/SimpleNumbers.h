@@ -3,12 +3,12 @@
 
 #include <vector>
 #include <sstream>
-#include <queue>
-#include <algorithm>
 #include <mutex>
 #include "FileStorage.h"
 #include "../../Config.h"
 #include "../../Utility.h"
+#include <set>
+#include <algorithm>
 
 class SimpleNumbers {
 
@@ -24,6 +24,8 @@ public:
 
 private:
     SimpleNumbers();
+
+    static int getMinMissingNumber(const std::vector<int> &arr);
 
     static std::mutex mtx;
     static SimpleNumbers* instance;

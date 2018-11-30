@@ -8,12 +8,13 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include "Config.h"
+#include <sys/ioctl.h>
 
 
 class Utility {
 
 public:
-    static void split(std::string str, std::vector<std::string>& cont, char divider);
+    static void split(const std::string &str, std::vector<std::string> &cont, char divider);
 };
 
 

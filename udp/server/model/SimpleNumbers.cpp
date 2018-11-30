@@ -3,6 +3,11 @@
 SimpleNumbers* SimpleNumbers::instance;
 std::mutex SimpleNumbers::mtx;
 
+struct classcomp {
+    bool operator() (const long& lhs, const long& rhs) const
+    {return lhs<rhs;}
+};
+
 SimpleNumbers::SimpleNumbers() {
     numberStorage = new FileStorage(std::string(Config::FILE_PATH) + "data");
     hopStorage = new FileStorage(std::string(Config::FILE_PATH) + "hop");
@@ -31,15 +36,14 @@ void SimpleNumbers::saveNumber(const long simpleNumber) {
     std::vector<std::string> formattedData;
     Utility::split(fileData, formattedData, '|');
 
-    std::vector<long> outputData;
+    std::set<long,classcomp> outputData;
 
     for (std::string strNum : formattedData) {
-        outputData.push_back(std::stol(strNum));
+        outputData.insert(std::stol(strNum));
     }
 
-    outputData.push_back(simpleNumber);
+    outputData.insert(simpleNumber);
 
-    std::sort(outputData.begin(), outputData.end());
 
     std::stringstream ss;
     for (long longNum : outputData) {
@@ -47,7 +51,41 @@ void SimpleNumbers::saveNumber(const long simpleNumber) {
     }
 
     mtx.lock();
-    numberStorage->write(ss.str());
+    numberStorage->write(ss.str());         // записали число
+
+    auto hopStorageData = hopStorage->read();
+    mtx.unlock();
+    std::vector<std::string> formattedHopStorageData;
+    Utility::split(hopStorageData, formattedHopStorageData, '|');
+
+    std::string substr1;
+    std::string substr2;
+    if (!formattedHopStorageData.empty()) {
+        substr1 = formattedHopStorageData[0];
+        if (formattedHopStorageData.size() > 1) {
+            substr2 = formattedHopStorageData[1];
+        }
+    }
+
+    std::vector<std::string> wasCounted;
+    Utility::split(substr1, wasCounted, ',');                  // записали, что дипазон отработан
+
+    std::set<long,classcomp> wasCountedData;
+
+    for (std::string strNum : wasCounted) {
+        wasCountedData.insert(std::stoi(strNum));
+    }
+    long range = simpleNumber / Config::HOP;
+    wasCountedData.insert(range);
+
+    std::stringstream ssHop;
+    for (auto longNum : wasCountedData) {
+        ssHop << longNum << ",";
+    }
+    ssHop << "|" << substr2;
+
+    mtx.lock();
+    hopStorage->write(ssHop.str());
     mtx.unlock();
 }
 
@@ -85,16 +123,79 @@ std::vector<long> SimpleNumbers::getLast(int n) {
 
 std::pair<long, long> SimpleNumbers::getRange() {
     mtx.lock();
-    auto nextHop = std::stoi(hopStorage->read());
+    auto fileData = hopStorage->read();
+    mtx.unlock();
+
+    std::vector<std::string> formattedData;
+    Utility::split(fileData, formattedData, '|');
+
+    std::string substr1;
+    std::string substr2;
+    if (!formattedData.empty()) {
+        substr1 = formattedData[0];
+        if (formattedData.size() > 1) {
+            substr2 = formattedData[1];
+        }
+    }
+
+    std::vector<std::string> wasCounted;
+    std::vector<std::string> inCounting;
+
+    Utility::split(substr1, wasCounted, ',');
+    Utility::split(substr2, inCounting, ',');
+
+    int firstVal = 0;
+    int lastVal = 0;
+    if (!inCounting.empty()) {
+        firstVal = std::stoi(inCounting[0]);
+        lastVal = std::stoi(inCounting[inCounting.size() - 1]);
+    }
+    if (lastVal - firstVal > Config::APPROXIMATE_NUMBER_OF_CLIENTS + 3) {
+        inCounting.erase(inCounting.begin());
+    }
+
+    std::set<int,classcomp> outputData;
+
+    for (std::string strNum : wasCounted) {
+        outputData.insert(std::stoi(strNum));
+    }
+    for (std::string strNum : inCounting) {
+        outputData.insert(std::stoi(strNum));
+    }
+
+    std::vector<int> dataVector(outputData.size());
+    std::copy(outputData.begin(), outputData.end(), dataVector.begin());
+
+    auto nextHop = getMinMissingNumber(dataVector);
     std::pair<long, long> range(Config::HOP * nextHop, Config::HOP * (nextHop + 1));
-    nextHop++;
-    hopStorage->write(std::to_string(nextHop));
+
+    std::stringstream ss;
+    for (auto longNum : wasCounted) {
+        ss << longNum << ",";
+        outputData.erase(std::stoi(longNum));
+    }
+    ss << "|";
+    for (auto longNum : outputData) {
+        ss << longNum << ",";
+    }
+    ss << nextHop << ",";
+
+    mtx.lock();
+    hopStorage->write(ss.str());
     mtx.unlock();
 
     return range;
 }
 
-
-
-
-
+int SimpleNumbers::getMinMissingNumber(const std::vector<int> &arr) {
+    for (int j = 0; j < arr.size(); ++j) {
+        if (std::find(arr.begin(), arr.end(), j) == arr.end() ) {
+            return j;
+        }
+    }
+    if (!arr.empty()) {
+        return arr[arr.size()-1] + 1;
+    } else {
+        return 0;
+    }
+}

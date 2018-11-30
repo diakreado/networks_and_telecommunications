@@ -2,7 +2,7 @@
 #include "Server.h"
 
 
-int Server::server_socket;
+int Server::serverSocket;
 std::string Server::command;
 
 
@@ -15,12 +15,12 @@ Server::Server() {
     si_me.sin_port = htons(Config::PORT);
     si_me.sin_addr.s_addr = htonl(INADDR_ANY);
 
-    server_socket = socket(AF_INET, SOCK_DGRAM, 0);
-    if (server_socket < 0) {
+    serverSocket = socket(AF_INET, SOCK_DGRAM, 0);
+    if (serverSocket < 0) {
         error_message("socket");
     }
 
-    int b = bind(server_socket, (struct sockaddr *) &si_me, sizeof(si_me));
+    int b = bind(serverSocket, (struct sockaddr *) &si_me, sizeof(si_me));
     if (b < 0) {
         error_message("bind");
     }
@@ -45,15 +45,13 @@ int Server::start() {
             std::cout << "command not found" << std::endl;
         }
     }
-
-    closeConnection(server_socket);
+    closeConnection(serverSocket);
     acceptThr.join();
 
     return 0;
 }
 
 void Server::mainThread() {
-
     struct sockaddr_in si_other;
 
     char buffer[Config::NUMBER_OF_READ_SYMBOLS];
@@ -64,20 +62,19 @@ void Server::mainThread() {
         if (command == "exit" or command == "e") {
             break;
         }
-
         std::cout << "Waiting for data...";
         fflush(stdout);
 
-        recv_len = recvfrom(server_socket, buffer, Config::NUMBER_OF_READ_SYMBOLS, 0, (struct sockaddr *) &si_other, &slen);
+        recv_len = recvfrom(serverSocket, buffer, Config::NUMBER_OF_READ_SYMBOLS, MSG_CONFIRM, (struct sockaddr *) &si_other, &slen);
         if (recv_len == -1) {
             error_message("recvfrom()");
         }
+
         new std::thread(threadFunc, si_other, buffer);
     }
 }
 
 void Server::threadFunc(struct sockaddr_in si_other, std::string data) {
-
     std::cout << "Received packet from " << inet_ntoa(si_other.sin_addr) << ":" << ntohs(si_other.sin_port) << std::endl;
     std::cout << "Data: " << data << std::endl;
 
@@ -88,8 +85,7 @@ void Server::write(const sockaddr_in si_other, std::string data) {
     data.push_back(Config::DELIMITER);
 
     socklen_t slen = sizeof(si_other);
-
-    if (sendto(server_socket, data.c_str(), data.size(), 0, (struct sockaddr*) &si_other, slen) == -1) {
+    if (sendto(serverSocket, data.c_str(), data.size(), MSG_CONFIRM, (struct sockaddr*) &si_other, slen) == -1) {
         error_message("sendto()");
     }
 }
@@ -102,5 +98,9 @@ void Server::closeConnection(int socket) {
 void Server::error_message(char* s) {
     perror(s);
     exit(EXIT_FAILURE);
+}
+
+int Server::getServerSocket() {
+    return serverSocket;
 }
 

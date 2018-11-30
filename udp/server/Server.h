@@ -25,11 +25,11 @@ public:
     int start();
 
     static void write(struct sockaddr_in si_other, std::string data);
-
     static void closeConnection(int socket);
+    static int getServerSocket();
 
 private:
-    static int server_socket;
+    static int serverSocket;
     static std::string command;
 
     static void mainThread();

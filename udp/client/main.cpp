@@ -19,10 +19,19 @@ int main()
 {
     auto client = new Client();
 
+    if (!client->isServerReachable()) {
+        return -1;
+    }
+
     while (true) {
         std::cout << ">_ ";
         std::string input;
         std::cin >> input;
+
+        if (!client->isServerReachable()) {
+            return -1;
+        }
+
         if (input == "next") {
             std::string request = "FROM?;";
             client->write(request);

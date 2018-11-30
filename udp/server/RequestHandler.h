@@ -6,6 +6,9 @@
 #include <string>
 #include "../Utility.h"
 #include "model/SimpleNumbers.h"
+#include <sys/time.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 class RequestHandler {
 
