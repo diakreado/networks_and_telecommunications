@@ -7,7 +7,7 @@
 #include <thread>
 #include <mutex>
 #include <vector>
-#include <zconf.h>
+//#include <zconf.h>
 #include <algorithm>
 #include <iostream>
 #include "../Config.h"

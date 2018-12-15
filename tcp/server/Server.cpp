@@ -1,4 +1,5 @@
 
+#include <unistd.h>
 #include "Server.h"
 
 
@@ -18,9 +19,7 @@ Server::Server() {
     bind(acceptSocket, (struct sockaddr *)&local, sizeof(local));
     listen(acceptSocket, 5);
 
-    std::cout << "+----------------------------------------+" << std::endl;
-    std::cout << "¦  Server binding to port : " << Config::PORT << "         ¦"<< std::endl;
-    std::cout << "+----------------------------------------+" << std::endl;
+    std::cout << " Server binding to port : " << Config::PORT << std::endl;
 }
 
 int Server::start() {

@@ -25,9 +25,7 @@ Server::Server() {
         error_message("bind");
     }
 
-    std::cout << "+----------------------------------------+" << std::endl;
-    std::cout << "¦  UDP server binding to port : " << Config::PORT << "         ¦"<< std::endl;
-    std::cout << "+----------------------------------------+" << std::endl;
+    std::cout << " UDP server binding to port : " << Config::PORT << std::endl;
 }
 
 int Server::start() {
