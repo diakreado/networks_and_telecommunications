@@ -281,6 +281,176 @@ sqrt(Nmax)+1)
 \end{itemize}
 Разработанные приложения как TCP, так и UDP успешно справились с тестированием. Во всех перечисленных случаях система уверенно выполняла предписанные требования и справлялась со своей основной задачей -- распределенным вычислением простых чисел.
 
+\subsubsection{Приложение на основе TCP}
+Для тестирования приложения был запущен сервер и три клиентских приложения. Клиентские приложения одновременно посылают различные запросы на сервер. Сервер успешно обеспечивал работу всех подключенных клиентов.
+
+\begin{minipage}{0.5\textwidth}
+  \begin{flushleft}
+	Клиент 1:
+     \begin{verbatim}
+Client connect to 127.0.0.1 7501
+>_max
+serverAnswer : 200| 7
+>_next
+serverAnswer : 200| 10,20
+>_next
+serverAnswer : 200| 20,30
+>_max
+serverAnswer : 200| 37
+>_next
+serverAnswer : 200| 30,40
+>_max
+serverAnswer : 200| 37
+>_max
+serverAnswer : 200| 37
+>_next
+serverAnswer : 200| 40,50
+>_next
+serverAnswer : 200| 50,60
+>_max
+serverAnswer : 200| 79
+>_last 7
+serverAnswer : 200| 53,59,61,67,
+71,73,79,
+    \end{verbatim}
+  \end{flushleft}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+  \begin{flushright}
+	Клиент 2:
+     \begin{verbatim}
+Client connect to 127.0.0.1 7501
+>_max
+serverAnswer : 200| 37
+>_max
+serverAnswer : 200| 59
+>_next
+serverAnswer : 200| 60,70
+>_max
+serverAnswer : 200| 67
+>_max
+serverAnswer : 200| 79
+     \end{verbatim}
+     
+     Клиент 3: 
+     \begin{verbatim}
+Client connect to 127.0.0.1 7501
+>_max
+serverAnswer : 200| 37
+>_max
+serverAnswer : 200| 67
+>_next
+serverAnswer : 200| 70,80
+>_max
+serverAnswer : 200| 79
+
+     \end{verbatim}
+  \end{flushright}
+\end{minipage}
+
+Сервер:
+     \begin{verbatim}
+Server binding to port : 7501
+server_> i
+Number of connection : 3
+1. client socket: 4
+2. client socket: 5
+3. client socket: 6
+server_> 
+     \end{verbatim}
+     
+В данном тесте демонстрируется то, как три клиента взаимодействуя с сервером, вычисляют ряд простых чисел. Поочередно клиенты запрашивают диапазон для вычисления, считают числа и отправляют на сервер. После каждой отправки данных проверялось, что данные изменились. Проверка проводилась с помощью команды $max$, на которую сервер возвращяет маскимальное расчитанное просто число. Результат соответсвует ожиданиям.
+
+\subsubsection{Приложение на основе UDP}
+Тестирование приложения на основе UDP проводилось аналогичным способом. Также была рассмотрена критическая ситуация, когда сервер становится недоступным, а клиент продолжает отправку данных.
+
+Клиент 1:
+\begin{verbatim}
+ack received
+>_ max
+ack received
+serverAnswer : 200| 37
+>_ last 4
+ack received
+serverAnswer : 200| 23,29,31,37,
+>_ max
+ack received
+serverAnswer : 200| 47
+>_ next
+ack received
+serverAnswer : 200| 50,60
+>_ next
+ack received
+serverAnswer : 200| 60,70
+>_ next
+ack received
+serverAnswer : 200| 70,80
+>_ max
+ack received
+serverAnswer : 200| 79
+>_ max
+timed out waiting for ack
+\end{verbatim}
+    
+Клиент 2:
+\begin{verbatim}
+ack received
+>_ max
+ack received
+serverAnswer : 200| 37
+>_ last 4 
+ack received
+
+serverAnswer : 200| 23,29,31,37,
+>_ next
+ack received
+serverAnswer : 200| 40,50
+>_ max
+ack received
+serverAnswer : 200| 47
+>_ max
+ack received
+serverAnswer : 200| 79
+>_ max
+timed out waiting for ack
+\end{verbatim}
+     
+Клиент 3: 
+\begin{verbatim}
+ack received
+>_ max
+ack received
+serverAnswer : 200| 37
+>_ last 4
+ack received
+serverAnswer : 200| 23,29,31,37,
+>_ max
+ack received
+serverAnswer : 200| 47
+>_ max
+ack received
+serverAnswer : 200| 79
+>_ last 8
+ack received
+serverAnswer : 200| 47,53,59,61,67,71,73,79,
+>_ next
+ack received
+serverAnswer : 200| 80,90
+>_ last 4  
+ack received
+serverAnswer : 200| 73,79,83,89,
+>_ max
+ack received
+serverAnswer : 200| 89
+>_ max
+timed out waiting for ack
+
+\end{verbatim}
+
+Все запросы на сервере логировались так, что было понятно с какого адреса и какое действие запрошено.
+
+Как видно из вывода, вычисления простых чисел проходило успешно. Также когда сервер был выключен, то все клиенты поняли это и прекратили работу тоже.
+
 \section{Вывод}
 В результате выполнения работы было разработано два приложения отличающиеся протоколом передачи данных, который они использовали. Оба приложения успешно выполняли свою основную задачу -- распределенное вычисление простых чисел. Было улучшено понимание принципов работы протоколов TCP и UDP.
 
