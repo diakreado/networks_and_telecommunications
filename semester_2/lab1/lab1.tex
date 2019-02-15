@@ -1,0 +1,112 @@
+\documentclass[a4paper,14pt]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{graphicx}
+\usepackage[top=0.8in, bottom=0.8in, left=0.8in, right=0.8in]{geometry}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{float}
+\usepackage{chngcntr}
+\usepackage{pgfplots}
+\usepackage{amsfonts}
+\usepackage{pgfplotstable}
+\usepackage{multirow}
+\usepackage{karnaugh-map}
+\usepackage{tikz,xcolor}
+\usepackage{listings}
+
+\titleformat{\section}[hang]
+  {\bfseries}
+  {}
+  {0em}
+  {\hspace{-0.4pt}\large \thesection\hspace{0.6em}}
+  
+  
+\titleformat{\subsection}[hang]
+  {\bfseries}
+  {}
+  {0em}
+  {\hspace{-0.4pt}\large \thesubsection\hspace{0.6em}}
+
+%\linespread{1.3} % полуторный интервал
+%\renewcommand{\rmdefault}{ftm} % Times New Roman
+
+\newcommand{\nx}{\overline{x}}
+\newcommand{\p}{0.31}
+\newcommand{\scale}{1.4}
+
+\counterwithin{figure}{section}
+\counterwithin{equation}{section}
+\counterwithin{table}{section}
+
+\begin{document}
+\begin{titlepage}
+\centering
+Санкт-Петербургский политехнический университет Петра Великого \\
+\vspace{0.15cm}
+Кафедра компьютерных систем и программных технологий \\
+\vspace{6.5cm}
+
+{\centering \textbf{Отчёт по лабораторной работе} \\ 
+\vspace{0.15cm}
+\textbf{Дисциплина}: Разработка сетевых приложений \\
+\vspace{0.15cm}
+\textbf{Тема}: Изучение прикладных протоколов в командной строке Linux} \\
+
+\vspace{6.5cm}
+
+\begin{table}[H]
+\begin{tabular}{p{\textwidth}@{}r}
+{Выполнил студент гр. 43501/3} \hfill {Мальцев  М.С.} \\
+{Преподаватель} \hfill {Зозуля А.В.} \\
+\end{tabular}
+\end{table}
+\vfill
+
+{\centering Санкт-Петербург \\ 
+\vspace{0.15cm}
+\today}
+\end{titlepage}
+
+\section{SMTP}
+
+\subsection{Основные сведения о протоколе}
+Simple Mail Transfer Protocol (SMTP)  - это интернет протокол для обмена почтой. Впервые был зафиксирован в RFC 821 в 1982 году. Был изменен в 2008 году RFC 5321. Используется на сегодняшний день.
+
+\subsection{Основные команды}
+Команды SMTP:
+\begin{itemize}
+\item EHLO - используется для приветствия в протоколе ESMTP. Рекомендуется к использованию по возможности
+\item HELO - команда приветствия. Используется для начала сессии
+\item MAIL - задается адрес отправителя
+\item RCPT - указывается получатель
+\item DATA - текст сообщения
+\item QUIT - выход
+\item HELP - списокк доступных команд или описание запрашиваемой команды
+\item NOOP - пустая команда, предположительно используется для поддержания соединения
+\item RSET - сброс
+\item SEND, SOML, SAML - передача сообщения на терминал пользователя
+\end{itemize}
+
+
+\subsection{Область применения и ограничения протокола}
+В то время, как электронные почтовые серверы и другие агенты пересылки сообщений используют SMTP для отправки и получения почтовых сообщений, работающие на пользовательском уровне клиентские почтовые приложения обычно используют SMTP только для отправки сообщений на почтовый сервер для ретрансляции. Для получения сообщений клиентские приложения обычно используют либо POP (англ. Post Office Protocol — протокол почтового отделения), либо IMAP (англ. Internet Message Access Protocol), либо патентованные системы (такие как Microsoft Exchange и Lotus Notes/Domino) для доступа к учётной записи своего почтового ящика на сервере. 
+
+\subsection{Пример использования}
+\lstinputlisting{src/1}
+
+\section{POP3}
+\section{IMAP}
+\section{HTTP}
+\section{FTP}
+\section{TFTP}
+\section{WebDAV}
+
+
+\section{Вывод}
+В выводах отразить, в чем заключается польза от выполнения данной работы.
+
+
+\end{document}
