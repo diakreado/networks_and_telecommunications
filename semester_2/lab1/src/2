@@ -1,0 +1,59 @@
+openssl s_client -connect pop.yandex.ru:995
+		[...]
++OK POP Ya! na@8o 4vVwfiwuP0U1
+user mikle9997@yandex.ru
++OK password, please.
+pass yoloyoloyoloyoloyolo
++OK 141 8600172
+stat
++OK 141 8600172
+list
++OK 141 8600172
+1 1714
+2 8768
+		[...]
+140 7116
+141 9267
+.
+noop
++OK noop
+top 1 0
++OK 1714 octets.
+X-Yandex-FolderName: Inbox
+Received: from mxback13j.mail.yandex.net ([127.0.0.1])
+	by mxback13j.mail.yandex.net with LMTP id SsFBoMrt
+	for <mikle9997@yandex.ru>; Sun, 17 Feb 2019 18:25:06 +0300
+Received: from mxback13j.mail.yandex.net (localhost.localdomain [127.0.0.1])
+	by mxback13j.mail.yandex.net (Yandex) with ESMTP id 2F97268C1381
+	for <mikle9997@yandex.ru>; Sun, 17 Feb 2019 18:25:06 +0300 (MSK)
+X-Yandex-Internal: 1
+Received: from smtp4o.mail.yandex.net (smtp4o.mail.yandex.net [2a02:6b8:0:1a2d::28])
+	by mxback13j.mail.yandex.net (nwsmtp/Yandex) with ESMTP id MbcW9nq0Ig-P6TuLGrX;
+	Sun, 17 Feb 2019 18:25:06 +0300
+X-Yandex-Front: mxback13j.mail.yandex.net
+X-Yandex-TimeMark: 1550417106
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1550417106;
+	bh=oMGQU4hVaHd+pvDa94cg5wNw8zPI8KCe9zxGqUAP3Wg=;
+	h=Message-Id:Date:From:To:Subject;
+	b=Se3jbrZfgy6Nz0YpKkEJS2uiPxYB/HhciwfWJUJtLP0mYlgcUYsy897kDLz5nKPY9
+	 otEKZCclw7lVgda/KhUck60jFCeqcIchBtZzzzHQS3RJUcXbTjrcw3Cfw0NR5WsC1o
+	 x6n7SMIZe4AyNKjusoPI/X3VT1xCo3ddYQ9VaaGE=
+Authentication-Results: mxback13j.mail.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by smtp4o.mail.yandex.net (nwsmtp/Yandex) with SMTP id ffkNcyAJLD-NlO4FHGx;
+	Sun, 17 Feb 2019 18:23:55 +0300
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(Client certificate not present)
+X-Yandex-Front: smtp4o.mail.yandex.net
+X-Yandex-TimeMark: 1550417035
+Message-Id: <20190217182505.NlO4FHGx@smtp4o.mail.yandex.net>
+Date: Sun, 17 Feb 2019 18:25:05 +0300
+X-Yandex-Spam: 1
+From: mikle9997@ya.ru
+To: mikle9997@ya.ru
+Subject: Hello world!
+Return-Path: mikle9997@yandex.ru
+.
+quit
++OK shutting down.
+read:errno=0
+

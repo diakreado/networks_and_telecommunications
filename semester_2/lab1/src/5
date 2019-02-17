@@ -1,0 +1,19 @@
+220 Hello World!
+USER anonymous
+331 Anonymous login ok, send your complete email address as your password
+PASS ************
+230 Logged in anonymously.
+PASV
+227 Entering Passive Mode (192,168,254,253,233,92) //Клиент должен открыть соединение на переданный IP
+LIST
+150 Here comes the directory listing. //Сервер передает список файлов в каталоге
+226 Directory send OK.
+CWD incoming
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,254,253,207,56)
+STOR example.avi
+150 Ok to send data. //Клиент передает содержимое файла
+226 File receive OK.
+QUIT
+221 Goodbye.

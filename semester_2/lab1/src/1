@@ -1,21 +1,28 @@
-S:220 mail.company.tld ESMTP is glad to see you!
-C:HELO
-S:250 domain name should be qualified
-C:MAIL FROM: <someusername@somecompany.ru>
-S:250 someusername@somecompany.ru sender accepted
-C:RCPT TO: <user1@company.tld>
-S:250 user1@company.tld ok
-C:RCPT TO: <user2@company.tld>
-S:550 user2@company.tld unknown user account
-C:DATA
-S:354 Enter mail, end with "." on a line by itself
-C:From: Some User <someusername@somecompany.ru>
-C:To: User1 <user1@company.tld>
-C:Subject: tema
-C:Content-Type: text/plain
-C:
-C:Hi!
-C:.
-S:250 769947 message accepted for delivery
-C:QUIT
-S:221 mail.company.tld CommuniGate Pro SMTP closing connection
+openssl s_client -connect smtp.yandex.ru:465
+                  [...]
+220 smtp4o.mail.yandex.net ESMTP (Want to use Yandex.Mail for your domain? Visit http://pdd.yandex.ru)
+helo host
+250 smtp4o.mail.yandex.net
+auth login
+334 VXNlcm5hbWU6
+byolo1234Tk3
+334 UGFzc3dvcmQ6
+N3XoyolobHlyolouamyoloRjyoloQm123jM=
+235 2.7.0 Authentication successful.
+mail from: <mikle9997@yandex.ru>
+250 2.1.0 <mikle9997@yandex.ru> ok
+rcpt to: <mikle9997@yandex.ru>
+250 2.1.5 <mikle9997@yandex.ru> recipient ok
+data
+354 Enter mail, end with "." on a line by itself
+From: mikle9997@ya.ru              
+To: mikle9997@ya.ru
+Subject: Hello world!
+
+This is the test message...
+new line
+.
+250 2.0.0 Ok: queued on smtp4o.mail.yandex.net as 1550417106-ffkNcyAJLD-NlO4FHGx
+quit
+221 2.0.0 Closing connection.
+read:errno=0
