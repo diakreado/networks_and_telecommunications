@@ -1,4 +1,12 @@
-openssl s_client -crlf -connect imap.yandex.ru:993
+openssl s_client -connect yandex.ru:443
 			[...]
-a login username pass
+GET / HTTP/1.1
+Host: yandex.ru
 
+HTTP/1.1 200 Ok
+Date: Mon, 18 Feb 2019 13:04:56 GMT
+Content-Type: text/html; charset=UTF-8
+Cache-Control: no-cache,no-store,max-age=0,must-revalidate
+Expires: Mon, 18 Feb 2019 13:04:56 GMT
+Last-Modified: Mon, 18 Feb 2019 13:04:56 GMT
+			[...]

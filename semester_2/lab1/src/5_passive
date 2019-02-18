@@ -1,0 +1,41 @@
+telnet 194.71.11.173 8646
+Trying 194.71.11.173...
+Connected to 194.71.11.173.
+Escape character is '^]'.
+-rw-r--r--    1 ftp      ftp          1216 Jun 02  2017 HEADER.html
+lrwxrwxrwx    1 ftp      ftp             3 Mar 16  2010 Public -> pub
+drwxr-xr-x    3 ftp      ftp            10 Jun 30  2017 about
+drwxr-sr-x   30 ftp      ftp            33 Feb 18 10:25 cdimage
+drwxr-xr-x    2 ftp      ftp             3 Jun 14  2006 conspiracy
+lrwxrwxrwx    1 ftp      ftp            22 Mar 16  2010 debian -> cdimage/.debian-mirror
+drwxr-xr-x    5 ftp      ftp             7 Mar 13  2016 debian-backports
+lrwxrwxrwx    1 ftp      ftp            16 Mar 16  2010 debian-cd -> cdimage/release/
+-rw-r--r--    1 ftp      ftp         15086 Apr 02  2018 favicon.ico
+drwxr-xr-x   82 ftp      ftp            89 Feb 04 20:28 mirror
+drwxr-xr-x    4 ftp      ftp            12 Feb 05  2016 pub
+lrwxrwxrwx    1 ftp      ftp            23 Mar 16  2010 releases -> mirror/ubuntu-releases/
+-rw-r--r--    1 ftp      ftp          1859 Mar 23  2017 robots.txt
+lrwxrwxrwx    1 ftp      ftp            12 Aug 01  2016 tails -> mirror/tails
+lrwxrwxrwx    1 ftp      ftp            13 Mar 16  2010 ubuntu -> mirror/ubuntu
+Connection closed by foreign host.
+
+telnet 194.71.11.173 54696
+Trying 194.71.11.173...
+Connected to 194.71.11.173.
+Escape character is '^]'.
+# robots.txt for http://ftp.acc.umu.se/
+# This file specifies what harvesting robots are allowed to index and not.
+#
+# For information on the original format: 
+# http://www.robotstxt.org/
+#
+# For information on updated format that allows wildcards:
+# https://developers.google.com/webmasters/control-crawl-index/docs/robots_txt
+
+User-agent: *
+# Rules without wildcards - original spec
+Disallow: /cdimage/.debian-mirror
+			[...]
+Disallow: /*.dmg$
+Connection closed by foreign host.
+

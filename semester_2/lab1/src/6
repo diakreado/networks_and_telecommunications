@@ -1,1 +1,6 @@
-123
+tftp localhost 1917
+tftp> get /home/mikle 1917
+Transfer timed out.
+
+tftp> quit
+

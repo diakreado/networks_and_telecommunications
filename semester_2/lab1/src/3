@@ -1,3 +1,75 @@
 openssl s_client -crlf -connect imap.yandex.ru:993
 			[...]
-a login username pass
+* OK Yandex IMAP4rev1 at imap39p.mail.yandex.net:993 ready to talk with ::ffff:95.161.223.174:54762, 2019-Feb-18 14:02:24, O2QGNH1kRCg1
+a1 login mikle9997@ya.ru yoloyoloyoloyoloyoloyolo
+* CAPABILITY IMAP4rev1 CHILDREN UNSELECT LITERAL+ NAMESPACE XLIST BINARY UIDPLUS ENABLE ID IDLE MOVE
+a1 OK login Completed.
+a2 list "" "*"
+* list (\Unmarked \HasNoChildren) "|" "&BEAEMARBBEEESwQ7BDoEOA-"
+* list (\Unmarked \HasNoChildren \Drafts) "|" Drafts
+* list (\Unmarked \NoInferiors) "|" INBOX
+* list (\Unmarked \HasNoChildren) "|" Outbox
+* list (\Unmarked \HasNoChildren \Sent) "|" Sent
+* list (\Unmarked \HasNoChildren \Junk) "|" Spam
+* list (\Unmarked \HasNoChildren \Trash) "|" Trash
+a2 OK list Completed.
+a3 examine inbox
+* FLAGS (\Answered \Seen \Draft \Deleted $Forwarded)
+* 141 EXISTS
+* 0 RECENT
+* OK [PERMANENTFLAGS (\Answered \Seen \Draft \Flagged \Deleted $Forwarded \*)] Limited
+* OK [UIDNEXT 251] Ok
+* OK [UIDVALIDITY 1436432001] Ok
+a3 OK [READ-ONLY] examine Completed.
+a4 fetch 1 (body[])  
+a4 BAD Command syntax error. sc=O2QGNH1kRCg1_181102_39p
+a4 fetch 1 body[]        
+* 1 FETCH (BODY[] {7088}
+Received: from mxfront8j.mail.yandex.net ([127.0.0.1])
+	by mxfront8j.mail.yandex.net with LMTP id PtQm2XTJ
+	for <mikle9997@yandex.ru>; Sat, 29 Aug 2015 12:24:01 +0300
+Received: from smtp01.steampowered.com (smtp01.steampowered.com [208.64.202.37])
+	by mxfront8j.mail.yandex.net (nwsmtp/Yandex) with ESMTPS id sqAbBBv7gm-O1XKofxX;
+	Sat, 29 Aug 2015 12:24:01 +0300
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA256 (256/256 bits))
+	(Client certificate not present)
+X-Yandex-Front: mxfront8j.mail.yandex.net
+X-Yandex-TimeMark: 1440840241
+Authentication-Results: mxfront8j.mail.yandex.net; spf=pass (mxfront8j.mail.yandex.net: domain of steampowered.com designates 208.64.202.37 as permitted sender) smtp.mail=noreply@steampowered.com; dkim=pass header.i=@steampowered.com
+X-Yandex-Spam: 1
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=steampowered.com; s=smtp;
+	h=Date:Message-Id:Content-Type:Subject:MIME-Version:Reply-To:From:To; bh=B3jH2v/RpG5AlyF1Wi68I3dCHOVg/oNdwBl07vUZDq0=;
+	b=MiqYzcJumq+B3xyjj9RX+4QVIrl5xHK5cMGyR1505p1udnwlJloHsRy7JWJMVgKtdatPdvLPuAGGGkhwFDxZM5a+rOkGNNiU3Sw4HhKJ/Sgm+3grcUwv/NFJxkE7cWrT6tojZlS7v7gm5rgXzxc4l9wzSnLbOqPlLQ6g8/yGcUo=;
+Received: from [10.3.3.29] (helo=valvesoftware.com)
+	by smtp01.steampowered.com with smtp (Exim 4.82)
+	(envelope-from <noreply@steampowered.com>)
+	id 1ZVcMh-0007zD-Lv
+	for mikle9997@yandex.ru; Sat, 29 Aug 2015 02:23:59 -0700
+To: mikle9997@yandex.ru
+From: Steam Support <noreply@steampowered.com>
+Reply-To: <noreply@steampowered.com>
+X-Steam-Message-Type: Account Information Confirmation
+MIME-Version: 1.0
+Subject: Your Steam account: Email address verification
+Content-Type: multipart/alternative;
+ boundary="------------060908020109090601040503"
+Message-Id: <E1ZVcMh-0007zD-Lv@smtp01.steampowered.com>
+Date: Sat, 29 Aug 2015 02:23:59 -0700
+Return-Path: noreply@steampowered.com
+X-Yandex-Forward: 7b0d2314e1a45660ce6bff40e8f54e2c
+
+This is a multi-part message in MIME format.
+--------------060908020109090601040503
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+In order to help maintain the security of your Steam account, please verify your email 
+			[...]
+)
+a4 OK fetch Completed.
+a5 logout
+* BYE IMAP4rev1 Server logging out
+a5 OK LOGOUT completed
+read:errno=0
+
+

@@ -1,1 +1,13 @@
-123
+mikle@mikle-Lenovo-V580c:~$ echo Hello world! > text
+mikle@mikle-Lenovo-V580c:~$ ll text 
+-rw-r--r-- 1 mikle mikle 13 фев 18 17:26 text
+mikle@mikle-Lenovo-V580c:~$ cat text 
+Hello world!
+mikle@mikle-Lenovo-V580c:~$ curl -X MKCOL 'https://webdav.yandex.ru/test_folder' --user "mikle9997@ya.ru:yoloyoloyoloyolo"
+mikle@mikle-Lenovo-V580c:~$ curl -T ~/text https://webdav.yandex.ru/test_folder/test_file --user "mikle9997@ya.ru:yoloyoloyoloyolo"
+mikle@mikle-Lenovo-V580c:~$ curl https://webdav.yandex.ru/test_folder/text^C-user "mikle9997@ya.ru:yoloyoloyoloyolo"
+mikle@mikle-Lenovo-V580c:~$ rm text 
+mikle@mikle-Lenovo-V580c:~$ cd Downloads/
+mikle@mikle-Lenovo-V580c:~/Downloads$ curl https://webdav.yandex.ru/test_folder/test_file --user "mikle9997@ya.ru:yoloyoloyoloyolo"
+Hello world!
+
